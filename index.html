@@ -78,7 +78,7 @@ h2{font-family:'Fraunces',serif;font-size:clamp(32px,4.2vw,48px);line-height:1.1
 .logos-track span{font-family:'Fraunces',serif;font-size:18px;color:var(--ink-2);opacity:.7;font-weight:600;transition:all .3s}
 .logos-track span:hover{opacity:1;color:var(--gold);transform:scale(1.08)}
 @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:22px}
+.services-carousel{position:relative}.services-track{display:flex;gap:22px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scroll-behavior:smooth;padding:6px 4px 26px;scrollbar-width:none;cursor:grab}.services-track::-webkit-scrollbar{display:none}.services-track .service{flex:0 0 86%;max-width:380px;scroll-snap-align:center}@media(min-width:720px){.services-track .service{flex:0 0 calc(50% - 11px);max-width:none}}@media(min-width:1080px){.services-track .service{flex:0 0 calc(33.333% - 15px)}}.svc-nav{position:absolute;top:42%;transform:translateY(-50%);width:46px;height:46px;border-radius:50%;background:var(--surface);border:1px solid var(--line);color:var(--ink);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:3;transition:all .25s;box-shadow:0 8px 24px rgba(0,0,0,.4)}.svc-nav:hover{background:var(--emerald);color:#0A0F1C;border-color:var(--emerald);transform:translateY(-50%) scale(1.08)}.svc-nav.prev{left:-22px}.svc-nav.next{right:-22px}.svc-nav svg{width:18px;height:18px}@media(max-width:760px){.svc-nav{display:none}}.svc-dots{display:flex;gap:8px;justify-content:center;margin-top:6px}.svc-dots button{width:8px;height:8px;border-radius:50%;border:0;background:rgba(201,210,227,.25);cursor:pointer;padding:0;transition:all .3s}.svc-dots button.is-active{background:var(--emerald);width:26px;border-radius:6px}.swipe-hint{display:none;text-align:center;color:var(--ink-2);font-size:13px;margin-top:6px;opacity:.7}@media(max-width:720px){.swipe-hint{display:block}}
 .service{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:30px;transition:all .35s cubic-bezier(.2,.8,.2,1);position:relative;overflow:hidden}
 .service::before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(52,211,153,0.18) 0%,rgba(245,194,107,0.18) 100%);opacity:0;transition:opacity .35s;z-index:0}
 .service:hover{transform:translateY(-8px);box-shadow:0 25px 50px -15px rgba(0,0,0,0.65);border-color:var(--emerald)}
@@ -214,7 +214,10 @@ footer .brand{margin-bottom:8px;justify-content:center;display:inline-flex}
 <h2>Six ways I make your week lighter.</h2>
 <p class="section-sub">Pick one or stack them. Hover any card to see what's inside. All packages are AI-augmented so the work moves faster and lands cleaner.</p>
 </div>
-<div class="services-grid">
+<div class="services-carousel">
+<button class="svc-nav prev" aria-label="Previous services" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+<button class="svc-nav next" aria-label="Next services" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
+<div class="services-track" id="servicesTrack">
 <div class="service reveal">
 <div class="icon">&#x2728;</div>
 <h3>Executive Assistant</h3>
@@ -287,6 +290,9 @@ footer .brand{margin-bottom:8px;justify-content:center;display:inline-flex}
 <li>Hand-off ready playbooks for your team</li>
 </ul>
 </div>
+</div>
+<div class="svc-dots" id="svcDots"></div>
+<div class="swipe-hint">Swipe to see more →</div>
 </div>
 </div>
 </section>
@@ -433,6 +439,45 @@ const fc=document.getElementById('floatCta');
 window.addEventListener('scroll',()=>{if(window.scrollY>600&&window.scrollY<document.body.scrollHeight-1200)fc.classList.add('show');else fc.classList.remove('show');});
 document.querySelectorAll('.btn-primary,.nav-cta').forEach(btn=>{btn.addEventListener('mousemove',e=>{const r=btn.getBoundingClientRect();const x=e.clientX-r.left-r.width/2;const y=e.clientY-r.top-r.height/2;btn.style.transform=`translate(${x*0.15}px,${y*0.25}px)`;});btn.addEventListener('mouseleave',()=>{btn.style.transform=''});});
 document.querySelectorAll('.service,.tcard').forEach(card=>{card.addEventListener('mousemove',e=>{const r=card.getBoundingClientRect();const x=(e.clientX-r.left)/r.width-0.5;const y=(e.clientY-r.top)/r.height-0.5;card.style.transform=`translateY(-6px) rotateX(${-y*4}deg) rotateY(${x*4}deg)`;});card.addEventListener('mouseleave',()=>{card.style.transform=''});});
+</script>
+
+<script>
+(function(){
+  var track=document.getElementById("servicesTrack");
+  if(!track) return;
+  var prev=document.querySelector(".svc-nav.prev");
+  var next=document.querySelector(".svc-nav.next");
+  var dotsWrap=document.getElementById("svcDots");
+  var cards=track.querySelectorAll(".service");
+  function step(){var c=track.querySelector(".service");if(!c)return 320;var s=getComputedStyle(track);var gap=parseInt(s.gap)||22;return c.getBoundingClientRect().width+gap;}
+  if(prev) prev.addEventListener("click",function(){track.scrollBy({left:-step(),behavior:"smooth"});});
+  if(next) next.addEventListener("click",function(){track.scrollBy({left:step(),behavior:"smooth"});});
+  for(var i=0;i<cards.length;i++){
+    (function(idx){
+      var b=document.createElement("button");b.type="button";b.setAttribute("aria-label","Go to service "+(idx+1));
+      b.addEventListener("click",function(){track.scrollTo({left:cards[idx].offsetLeft-track.offsetLeft,behavior:"smooth"});});
+      dotsWrap.appendChild(b);
+    })(i);
+  }
+  function activeDot(){
+    var center=track.scrollLeft+track.clientWidth/2;
+    var best=0,bestDist=Infinity;
+    for(var i=0;i<cards.length;i++){
+      var c=cards[i];var mid=c.offsetLeft+c.offsetWidth/2-track.offsetLeft;
+      var d=Math.abs(mid-center);if(d<bestDist){bestDist=d;best=i;}
+    }
+    var ds=dotsWrap.querySelectorAll("button");
+    for(var j=0;j<ds.length;j++) ds[j].classList.toggle("is-active",j===best);
+  }
+  track.addEventListener("scroll",function(){requestAnimationFrame(activeDot);});
+  window.addEventListener("resize",activeDot);
+  activeDot();
+  var isDown=false,startX=0,startLeft=0;
+  track.addEventListener("mousedown",function(e){isDown=true;startX=e.pageX;startLeft=track.scrollLeft;track.style.cursor="grabbing";});
+  window.addEventListener("mouseup",function(){isDown=false;track.style.cursor="";});
+  track.addEventListener("mouseleave",function(){isDown=false;track.style.cursor="";});
+  track.addEventListener("mousemove",function(e){if(!isDown)return;e.preventDefault();track.scrollLeft=startLeft-(e.pageX-startX);});
+})();
 </script>
 </body>
 </html>
