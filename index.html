@@ -112,16 +112,17 @@ h2{font-family:'Fraunces',serif;font-size:clamp(32px,4.2vw,48px);line-height:1.1
 .stat-card:hover{transform:translateY(-6px) rotate(-1deg);box-shadow:0 20px 40px -15px rgba(0,0,0,0.6)}
 .stat-num{font-family:'Fraunces',serif;font-size:60px;font-weight:700;line-height:1;margin-bottom:8px;color:var(--ink)}
 .stat-label{font-size:14px;opacity:.92;font-weight:500;color:var(--ink-2)}
-.testimonials{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:22px}
-.tcard{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:32px;position:relative;transition:all .3s;overflow:hidden}
-.tcard::after{content:"";position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(52,211,153,0.08),transparent);transition:left .8s}
+.testimonials{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px;align-items:stretch}
+.tcard{background:#172241;border:1px solid rgba(201,210,227,0.10);border-radius:18px;padding:30px 28px 26px;position:relative;transition:transform .3s ease,border-color .3s ease,box-shadow .3s ease;overflow:hidden;display:flex;flex-direction:column;min-height:260px}
+.tcard::before{content:"\201C";position:absolute;top:14px;right:22px;font-family:'Fraunces',serif;font-size:64px;line-height:1;color:rgba(52,211,153,0.16);font-weight:700;pointer-events:none}
+.tcard::after{content:"";position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(52,211,153,0.07),transparent);transition:left .9s ease;pointer-events:none}
 .tcard:hover::after{left:100%}
-.tcard:hover{transform:translateY(-5px);box-shadow:0 20px 40px -15px rgba(0,0,0,0.6);border-color:var(--gold)}
-.quote{font-size:16px;line-height:1.65;margin-bottom:22px;color:var(--ink);font-weight:500}
-.tperson{display:flex;align-items:center;gap:12px}
-.avatar{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;color:#0A0F1C;font-family:'Fraunces',serif;font-size:16px}
-.tperson b{display:block;font-size:14px;font-weight:700;color:var(--ink)}
-.tperson em{display:block;font-size:13px;color:var(--ink-2);font-style:normal}
+.tcard:hover{transform:translateY(-4px);border-color:rgba(245,194,107,0.45);box-shadow:0 18px 40px -18px rgba(0,0,0,0.7)}
+.quote{font-size:15.5px;line-height:1.7;margin:0 0 22px;color:#E6EBF5;font-weight:400;flex:1 1 auto;position:relative;z-index:1}
+.tperson{display:flex;align-items:center;gap:14px;padding-top:18px;border-top:1px solid rgba(201,210,227,0.08);margin-top:auto}
+.avatar{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;color:#0A0F1C;font-family:'Fraunces',serif;font-size:15px;letter-spacing:.5px;background:linear-gradient(135deg,var(--emerald) 0%,var(--gold) 100%);flex-shrink:0;box-shadow:0 4px 12px -4px rgba(0,0,0,0.5)}
+.tperson b{display:block;font-size:14.5px;font-weight:600;color:#FFFFFF;line-height:1.3;margin-bottom:2px;letter-spacing:.1px}
+.tperson em{display:block;font-size:12.5px;color:#9AA8C0;font-style:normal;line-height:1.4;font-weight:400}
 .tools-section{background:linear-gradient(160deg,var(--surface) 0%,var(--surface-2) 100%);border:1px solid var(--line);border-radius:32px;padding:60px 48px;margin:0 28px;position:relative;overflow:hidden}
 .tools-section::before{content:"";position:absolute;top:-100px;right:-100px;width:420px;height:420px;background:radial-gradient(circle,rgba(52,211,153,0.22),transparent 60%);animation:float 18s ease-in-out infinite}
 .tools-section > *{position:relative;z-index:1}
@@ -332,43 +333,43 @@ footer .brand{margin-bottom:8px;justify-content:center;display:inline-flex}
 <div class="testimonials">
 <div class="tcard reveal">
 <p class="quote">Cio ran my world as my executive assistant. Inbox, calendar, vendor calls, even the personal errands and family logistics. He gave me back the bandwidth to actually run the business.</p>
-<div class="tperson"><div class="avatar" style="background:var(--emerald)">AG</div><div><b>Adam G.</b><em>Founder and CEO, 6-figure newsletter business</em></div></div>
+<div class="tperson"><div class="avatar">AG</div><div><b>Adam G.</b><em>Founder and CEO, 6-figure newsletter business</em></div></div>
 </div>
 <div class="tcard reveal">
 <p class="quote">Running an agency is chaos. Cio quietly turned ours into something that actually scales without burning the team out.</p>
-<div class="tperson"><div class="avatar" style="background:var(--gold)">KD</div><div><b>Kyla D.</b><em>Founder and CEO, Marketing Agency</em></div></div>
+<div class="tperson"><div class="avatar">KD</div><div><b>Kyla D.</b><em>Founder and CEO, Marketing Agency</em></div></div>
 </div>
 <div class="tcard reveal">
 <p class="quote">We hired ten clinicians in a month with zero pipeline drama. Bullhorn was a mess before he touched it.</p>
-<div class="tperson"><div class="avatar" style="background:var(--emerald-2)">SP</div><div><b>Sarah P.</b><em>Director of Talent, Healthcare Staffing Agency</em></div></div>
+<div class="tperson"><div class="avatar">SP</div><div><b>Sarah P.</b><em>Director of Talent, Healthcare Staffing Agency</em></div></div>
 </div>
 <div class="tcard reveal">
 <p class="quote">Non-medical staffing was killing our margins. Cio rebuilt the sourcing flow and we finally hit our weekly placement target.</p>
-<div class="tperson"><div class="avatar" style="background:var(--gold-2)">MR</div><div><b>Marcus R.</b><em>VP of Operations, Healthcare Staffing Agency</em></div></div>
+<div class="tperson"><div class="avatar">MR</div><div><b>Marcus R.</b><em>VP of Operations, Healthcare Staffing Agency</em></div></div>
 </div>
 <div class="tcard reveal">
 <p class="quote">Our customer service queue used to embarrass me. He cleared the backlog in two weeks and our CSAT jumped to 96 percent.</p>
-<div class="tperson"><div class="avatar" style="background:var(--accent)">LC</div><div><b>Liana C.</b><em>Owner, Online Retail Business</em></div></div>
+<div class="tperson"><div class="avatar">LC</div><div><b>Liana C.</b><em>Owner, Online Retail Business</em></div></div>
 </div>
 <div class="tcard reveal">
 <p class="quote">He answers DMs and chats faster than my best in-house rep. Returns and refunds are now a non-issue.</p>
-<div class="tperson"><div class="avatar" style="background:var(--emerald)">JV</div><div><b>Jordan V.</b><em>Co-Founder, Ecommerce Apparel Brand</em></div></div>
+<div class="tperson"><div class="avatar">JV</div><div><b>Jordan V.</b><em>Co-Founder, Ecommerce Apparel Brand</em></div></div>
 </div>
 <div class="tcard reveal">
-<p class="quote">Inbound sales calls used to slip through. He picks up, qualifies, books, and the close rate has nearly doubled.</p>
-<div class="tperson"><div class="avatar" style="background:var(--gold)">EM</div><div><b>Ethan M.</b><em>Sales Director, Inbound Sales Team</em></div></div>
+<p class="quote">Our inbound chat used to convert at half the rate. He runs the live chat queue, qualifies on the fly, and warm leads close before they cool off.</p>
+<div class="tperson"><div class="avatar">EM</div><div><b>Ethan M.</b><em>Head of Ecommerce, Inbound Chat Sales</em></div></div>
 </div>
 <div class="tcard reveal">
 <p class="quote">My socials looked dead before. Now we post daily, the reels go off, and I haven't touched Canva in a month.</p>
-<div class="tperson"><div class="avatar" style="background:var(--emerald-2)">NB</div><div><b>Nina B.</b><em>Founder, Social Media Management Client</em></div></div>
+<div class="tperson"><div class="avatar">NB</div><div><b>Nina B.</b><em>Founder, Social Media Management Client</em></div></div>
 </div>
 <div class="tcard reveal">
 <p class="quote">He builds systems quietly. One day you realize the whole back-office is running without you having to think about it.</p>
-<div class="tperson"><div class="avatar" style="background:var(--accent)">JT</div><div><b>James T.</b><em>CEO, Real Estate Investment Firm</em></div></div>
+<div class="tperson"><div class="avatar">JT</div><div><b>James T.</b><em>CEO, Real Estate Investment Firm</em></div></div>
 </div>
 <div class="tcard reveal">
 <p class="quote">I stopped working weekends. That's the whole review.</p>
-<div class="tperson"><div class="avatar" style="background:var(--gold-2)">DK</div><div><b>David K.</b><em>Founder, SaaS Startup, USA</em></div></div>
+<div class="tperson"><div class="avatar">DK</div><div><b>David K.</b><em>Founder, SaaS Startup, USA</em></div></div>
 </div>
 </div>
 </div>
