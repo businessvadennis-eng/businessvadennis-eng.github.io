@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+  <html lang="en">
+  <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>ETC 2026 PNL Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <style>
+  :root{--bg:#0A0F1C;--bg-2:#101933;--surface:#162038;--surface-2:#1C2746;--ink:#F5F7FA;--muted:#9AA4B2;--accent:#22C55E;--accent-2:#3B82F6;--warn:#F59E0B;--danger:#EF4444;--border:#243150}
+  *{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+  body{font-family:'Inter',system-ui,sans-serif;background:linear-gradient(180deg,var(--bg),var(--bg-2));color:var(--ink);min-height:100vh;padding:24px}
+.container{max-width:1400px;margin:0 auto}
+.header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;margin-bottom:32px;padding-bottom:24px;border-bottom:1px solid var(--border)}
+.title{font-size:32px;font-weight:800;letter-spacing:-0.02em}
+.subtitle{color:var(--muted);font-size:14px;margin-top:4px}
+.status-bar{display:flex;gap:12px;align-items:center;font-size:13px;color:var(--muted)}
+.live-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px rgba(34,197,94,0.2);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
+.refresh-btn{background:var(--accent-2);color:#fff;border:none;padding:8px 16px;border-radius:8px;font-weight:600;cursor:pointer;font-size:13px}
+.refresh-btn:hover{opacity:0.9}
+.tabs{display:flex;gap:8px;margin-bottom:24px;overflow-x:auto;padding-bottom:8px}
+.tab{padding:10px 20px;border-radius:10px;background:var(--surface);border:1px solid var(--border);color:var(--muted);cursor:pointer;font-weight:600;font-size:14px;white-space:nowrap;transition:all 0.2s}
+.tab:hover{color:var(--ink)}
+.tab.active{background:var(--accent-2);color:#fff;border-color:var(--accent-2)}
+.tab.all{background:linear-gradient(135deg,#22C55E,#3B82F6);color:#fff;border:none}
+.tab.all.active{box-shadow:0 0 0 2px var(--ink)}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:32px}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px;popsition:relative;overflow:hidden}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent)}
+  .stat-card.invoiced::before{background:var(--accent-2)}
+.stat-card.pending::before{background:var(--warn)}
+.stat-card.outstanding::before{background:var(--danger)}
+.stat-label{color:var(--muted);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px}
+.stat-value{font-size:28px;font-weight:800;letter-spacing:-0.02em}
+.stat-sub{font-size:12px;color:var(--muted);margin-top:6px}
+.charts-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:32px}
+@media(max-width:900px){.charts-grid{grid-template-columns:1fr}}
+.chart-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px}
+.chart-title{font-size:14px;font-weight:700;margin-bottom:16px;color:var(--ink)}
+.chart-wrap{position:relative;height:300px}
+.table-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.table-header{padding:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;border-bottom:1px solid var(--border)}
+.table-title{font-size:16px;font-weight:700}
+.search-box{background:var(--bg);border:1px solid var(--border);color:var(--ink);padding:8px 14px;border-radius:8px;font-size:13px;width:260px;font-family:inherit}
+.table-wrap{overflow-x:auto;max-height:600px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+thead{background:var(--surface-2);position:sticky;top:0;z-index:1}
+th{text-align:left;padding:12px 16px;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:0.05em;color:var(--muted);border-bottom:1px solid var(--border)}
+td{padding:12px 16px;border-bottom:1px solid var(--border)}
+tr:hover td{background:var(--surface-2)}
+  .amount{font-weight:600;font-variant-numeric:tabular-nums;text-align:right}
+.amount.received{color:var(--accent)}
+.badge{display:inline-block;padding:4px 10px;border-radius:999px;font-size:11px;font-weight:600}
+.badge-paid{background:rgba(34,197,94,0.15);color:#4ADE80}
+.badge-pending{background:rgba(245,158,11,0.15);color:#FBBF24}
+.badge-unpaid{background:rgba(239,68,68,0.15);color:#F87171}
+.badge-other{background:rgba(154,164,178,0.15);color:var(--muted)}
+.loading{text-align:center;padding:60px;color:var(--muted)}
+.spinner{border:3px solid var(--border);border-top-color:var(--accent-2);border-radius:50%;width:32px;height:32px;animation:spin 1s linear infinite;margin:0 auto 16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.footer{text-align:center;color:var(--muted);font-size:12px;margin-top:32px;padding-top:24px;border-top:1px solid var(--border)}
+.footer a{color:var(--accent-2);text-decoration:none}
+</style>
+  </head>
+  <body>
+  <div class="container">
+  <div class="header">
+  <div>
+  <div class="title">ETC 2026 PNL Dashboard</div>
+  <div class="subtitle">Live invoice tracking · auto-syncs with Google Sheets</div>
+  </div>
+  <div class="status-bar">
+  <span class="live-dot"></span>
+  <span id="lastUpdate">Loading...</span>
+  <button class="refresh-btn" onclick="loadAll()">Refresh</button>
+  </div>
+  </div>
+
+  <div class="tabs" id="tabs"></div>
+
+  <div id="content">
+  <div class="loading"><div class="spinner"></div>Loading PNL data...</div>
+  </div>
+
+  <div class="footer">
+  Data sourced live from the <a href="https://docs.google.com/spreadsheets/d/1rrYVlV4-ITMt7BVG57wAgD0JA0OAC_btmCXhHF_g35E/edit" target="_blank">ETC2026 INVOICE</a> sheet · auto-refreshes every 60 seconds
+</div>
+</div>
+
+<script>
+const SHEET_ID = '1rrYVlV4-ITMt7BVG57wAgD0JA0OAC_btmCXhHF_g35E';
+const MONTHS = [
+{name:'All',gid:'all'},
+{name:'January',gid:'531176413'},
+{name:'February',gid:'179738908'},
+{name:'March',gid:'1469309677'},
+{name:'April',gid:'2070682598'},
+{name:'May',gid:'1580980159'},
+{name:'June',gid:'1499473203'}
+];
+let allData = {};
+let activeMonth = 'All';
+let chartStatus = null;
+let chartCompany = null;
+
+function parseCSV(text){
+  const rows=[];let cur=[];let val='';let inQ=false;
+  for(let i=0;i<text.length;i++){
+    const c=text[i];
+    if(inQ){
+      if(c==='"'){if(text[i+1]==='"'){val+='"';i++;}else{inQ=false;}}
+      else val+=c;
+    } else {
+      if(c==='"')inQ=true;
+      else if(c===','){cur.push(val);val='';}
+              else if(c==='\n'){cur.push(val);rows.push(cur);cur=[];val='';}
+              else if(c!=='\r')val+=c;
+                               }
+                      }
+  if(val||cur.length){cur.push(val);rows.push(cur);}
+  return rows;
+    }
+
+function parseAmount(s){
+    if(!s)return 0;
+  const n=parseFloat(String(s).replace(/[$,\s]/g,''));
+      return isNaN(n)?0:n;
+  }
+
+function fmt(n){return '$'+n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});}
+
+async function fetchMonth(gid){
+  const url=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&gid=${gid}&_=${Date.now()}`;
+  const r=await fetch(url);
+  const txt=await r.text();
+  const rows=parseCSV(txt);
+  if(rows.length<2)return [];
+  const records=[];
+  for(let i=1;i<rows.length;i++){
+    const r=rows[i];
+    if(!r[0]&&!r[3])continue;
+    records.push({
+            invoiceId:r[0]||'',
+            date:r[1]||'',
+            company:r[2]||'',
+            affiliate:r[3]||'',
+            invoiced:parseAmount(r[4]),
+            received:parseAmount(r[5]),
+            status:r[6]||'',
+            note:r[7]||''
+      });
+  }
+  return records;
+}
+
+async function loadAll(){
+  document.getElementById('lastUpdate').textContent='Refreshing...';
+  try{
+    const promises=MONTHS.filter(m=>m.gid!=='all').map(async m=>{
+      allData[m.name]=await fetchMonth(m.gid);
+});
+    await Promise.all(promises);
+    document.getElementById('lastUpdate').textContent='Updated '+new Date().toLocaleTimeString();
+    render();
+  }catch(e){
+    document.getElementById('lastUpdate').textContent='Error loading data';
+    console.error(e);
+  }
+}
+
+function getActiveData(){
+    if(activeMonth==='All'){
+    const combined=[];
+    for(const m of MONTHS){
+            if(m.gid==='all')continue;
+            for(const rec of (allData[m.name]||[])){
+        combined.push({...rec,month:m.name});
+            }
+              }
+                  return combined;
+}
+  return (allData[activeMonth]||[]).map(r=>({...r,month:activeMonth}));
+}
+
+function statusBadge(s){
+    const t=(s||'').toLowerCase();
+  if(t.includes('paid'))return `<span class="badge badge-paid">${s}</span>`;
+  if(t.includes('no final')||t.includes('pending'))return `<span class="badge badge-pending">${s}</span>`;
+  if(t.includes('unpaid')||t.includes('overdue'))return `<span class="badge badge-unpaid">${s}</span>`;
+  if(!s)return '';
+  return `<span class="badge badge-other">${s}</span>`;
+}
+
+function renderTabs(){
+    const t=document.getElementById('tabs');
+  t.innerHTML=MONTHS.map(m=>`<div class="tab ${m.gid==='all'?'all':''} ${activeMonth===m.name?'active':''}" data-name="${m.name}">${m.name}</div>`).join('');
+      t.querySelectorAll('.tab').forEach(el=>{
+            el.onclick=()=>{activeMonth=el.dataset.name;render();};
+  });
+               }
+
+function render(){
+  renderTabs();
+  const data=getActiveData();
+  const totalInvoiced=data.reduce((s,r)=>s+(r.invoiced||r.received),0);
+  const totalReceived=data.reduce((s,r)=>s+r.received,0);
+  const paid=data.filter(r=>r.status.toLowerCase().includes('paid'));
+  const pending=data.filter(r=>!r.status.toLowerCase().includes('paid')&&r.status);
+  const paidAmt=paid.reduce((s,r)=>s+r.received,0);
+  const pendingAmt=pending.reduce((s,r)=>s+(r.invoiced||r.received),0);
+
+  const content=document.getElementById('content');
+  content.innerHTML=`
+    <div class="stats-grid">
+      <div class="stat-card invoiced">
+        <div class="stat-label">Total Invoiced</div>
+        <div class="stat-value">${fmt(totalInvoiced)}</div>
+        <div class="stat-sub">${data.length} invoices</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Total Received</div>
+        <div class="stat-value">${fmt(totalReceived)}</div>
+        <div class="stat-sub">${paid.length} paid</div>
+      </div>
+      <div class="stat-card pending">
+        <div class="stat-label">Pending / Outstanding</div>
+        <div class="stat-value">${fmt(pendingAmt)}</div>
+        <div class="stat-sub">${pending.length} open</div>
+      </div>
+      <div class="stat-card outstanding">
+        <div class="stat-label">Collection Rate</div>
+        <div class="stat-value">${totalInvoiced>0?Math.round(totalReceived/totalInvoiced*100):0}%</div>
+        <div class="stat-sub">paid vs invoiced</div>
+      </div>
+    </div>
+
+    <div class="charts-grid">
+      <div class="chart-card">
+        <div class="chart-title">${activeMonth==='All'?'Revenue by Month':'Top Affiliates'}</div>
+        <div class="chart-wrap"><canvas id="chart1"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Status Breakdown</div>
+        <div class="chart-wrap"><canvas id="chart2"></canvas></div>
+      </div>
+    </div>
+
+    <div class="table-card">
+      <div class="table-header">
+        <div class="table-title">Invoices · ${activeMonth}</div>
+        <input type="text" class="search-box" placeholder="Search affiliates, companies, status..." id="searchBox" />
+      </div>
+      <div class="table-wrap">
+        <table id="dataTable">
+          <thead>
+            <tr>
+              ${activeMonth==='All'?'<th>Month</th>':''}
+              <th>Invoice ID</th>
+              <th>Company</th>
+              <th>Affiliate</th>
+              <th style="text-align:right">Amount</th>
+              <th>Status</th>
+              <th>Note</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  `;
+  renderTable(data);
+  document.getElementById('searchBox').oninput=e=>{
+    const q=e.target.value.toLowerCase();
+    renderTable(data.filter(r=>(r.affiliate+' '+r.company+' '+r.status+' '+r.invoiceId).toLowerCase().includes(q)));
+};
+  drawCharts(data);
+}
+
+function renderTable(data){
+  const body=document.getElementById('tableBody');
+  if(!data.length){body.innerHTML=`<tr><td colspan="7" style="text-align:center;padding:40px;color:var(--muted)">No invoices found</td></tr>`;return;}
+  body.innerHTML=data.map(r=>`
+    <tr>
+      ${activeMonth==='All'?`<td>${r.month}</td>`:''}
+      <td>${r.invoiceId||'—'}</td>
+      <td>${r.company||'—'}</td>
+      <td>${r.affiliate||'—'}</td>
+      <td class="amount ${r.status.toLowerCase().includes('paid')?'received':''}">${fmt(r.received||r.invoiced)}</td>
+      <td>${statusBadge(r.status)}</td>
+      <td style="color:var(--muted);font-size:12px">${r.note||''}</td>
+    </tr>
+  `).join('');
+}
+
+function drawCharts(data){
+  if(chartStatus){chartStatus.destroy();chartStatus=null;}
+  if(chartCompany){chartCompany.destroy();chartCompany=null;}
+
+  // Chart 1
+  const ctx1=document.getElementById('chart1');
+  let labels1=[],vals1=[];
+  if(activeMonth==='All'){
+    for(const m of MONTHS){
+            if(m.gid==='all')continue;
+            const recs=allData[m.name]||[];
+      labels1.push(m.name.slice(0,3));
+      vals1.push(recs.reduce((s,r)=>s+r.received,0));
+  }
+  } else {
+    const byAff={};
+    data.forEach(r=>{const k=r.affiliate||'Unknown';byAff[k]=(byAff[k]||0)+(r.received||r.invoiced);});
+    const sorted=Object.entries(byAff).sort((a,b)=>b[1]-a[1]).slice(0,8);
+    labels1=sorted.map(x=>x[0]);vals1=sorted.map(x=>x[1]);
+}
+  chartCompany=new Chart(ctx1,{type:'bar',data:{labels:labels1,datasets:[{label:'$',data:vals1,backgroundColor:'#3B82F6',borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{color:'#9AA4B2',callback:v=>'$'+v.toLocaleString()},grid:{color:'#243150'}},x:{ticks:{color:'#9AA4B2'},grid:{display:false}}}}});
+
+  // Chart 2 - status
+  const groups={Paid:0,Pending:0,Unpaid:0,Other:0};
+  data.forEach(r=>{
+    const s=(r.status||'').toLowerCase();
+    const amt=r.received||r.invoiced;
+    if(s.includes('paid'))groups.Paid+=amt;
+    else if(s.includes('no final')||s.includes('pending'))groups.Pending+=amt;
+    else if(s.includes('unpaid')||s.includes('overdue'))groups.Unpaid+=amt;
+    else groups.Other+=amt;
+});
+  const ctx2=document.getElementById('chart2');
+  chartStatus=new Chart(ctx2,{type:'doughnut',data:{labels:Object.keys(groups),datasets:[{data:Object.values(groups),backgroundColor:['#22C55E','#F59E0B','#EF4444','#6B7280'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:'#F5F7FA',padding:12}}}}});
+}
+
+loadAll();
+setInterval(loadAll,60000);
+</script>
+</body>
+</html>
