@@ -153,6 +153,17 @@ footer .brand{margin-bottom:8px;justify-content:center;display:inline-flex}
 .footer-icons a{width:42px;height:42px;border-radius:50%;background:var(--surface);border:1px solid var(--line);display:inline-flex;align-items:center;justify-content:center;color:var(--ink-2);transition:all .3s}
 .footer-icons a:hover{background:var(--emerald);color:#0A0F1C;transform:translateY(-3px) rotate(-6deg);border-color:var(--emerald);box-shadow:0 10px 24px rgba(52,211,153,0.4)}
 .footer-icons a svg{width:18px;height:18px}
+
+.gfx-filters{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:36px}
+.gfx-filter{padding:9px 20px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--ink-2);font-size:13px;font-weight:600;cursor:pointer;transition:all .25s;font-family:inherit}
+.gfx-filter:hover{border-color:var(--emerald);color:var(--emerald)}
+.gfx-filter.is-active{background:var(--emerald);border-color:var(--emerald);color:#0A0F1C;box-shadow:0 6px 18px rgba(52,211,153,0.4)}
+.gfx-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px}
+.gfx-item{display:block;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:var(--surface);transition:all .3s;position:relative}
+.gfx-item:hover{transform:translateY(-5px);box-shadow:0 20px 40px -12px rgba(0,0,0,0.65);border-color:var(--emerald)}
+.gfx-item img{width:100%;height:200px;object-fit:cover;display:block;transition:transform .4s}
+.gfx-item:hover img{transform:scale(1.04)}
+.gfx-item.hidden{display:none}
 </style>
 </head>
 <body>
@@ -163,6 +174,7 @@ footer .brand{margin-bottom:8px;justify-content:center;display:inline-flex}
 <div class="brand">Cio<span>.</span></div>
 <div class="nav-links">
 <a href="#services">Services</a>
+<a href="#graphics">Graphics</a>
 <a href="#process">Process</a>
 <a href="#results">Results</a>
 <a href="#voices">Voices</a>
@@ -297,6 +309,55 @@ footer .brand{margin-bottom:8px;justify-content:center;display:inline-flex}
 </div>
 </div>
 </section>
+
+<section id="graphics">
+<div class="container">
+<div class="reveal">
+<div class="eyebrow">Graphics Portfolio</div>
+<h2>Visual work across social, content, and brand.</h2>
+<p class="section-sub">From analytics reports to YouTube thumbnails — a sample of the design and content assets I produce for clients.</p>
+</div>
+<div class="gfx-filters reveal">
+<button class="gfx-filter is-active" data-filter="All">All</button>
+<button class="gfx-filter" data-filter="Analytics">Analytics</button>
+<button class="gfx-filter" data-filter="Carousels">Carousels</button>
+<button class="gfx-filter" data-filter="LinkedIn">LinkedIn</button>
+<button class="gfx-filter" data-filter="Twitter Post">Twitter Post</button>
+<button class="gfx-filter" data-filter="YT Thumbnails">YT Thumbnails</button>
+</div>
+<div class="gfx-grid reveal" id="gfxGrid">
+<a href="https://drive.google.com/file/d/1NPHV5foiVOh8MTbFb0LrXeuOgN6QFC_n/view" target="_blank" rel="noopener" class="gfx-item" data-cat="Analytics"><img src="https://drive.google.com/thumbnail?id=1NPHV5foiVOh8MTbFb0LrXeuOgN6QFC_n&sz=w800" alt="Analytics 1" loading="lazy" /></a>
+<a href="https://drive.google.com/file/d/1qu0vLkf-1VVhBzjLMcCpNO9hpRSGViw0/view" target="_blank" rel="noopener" class="gfx-item" data-cat="Analytics"><img src="https://drive.google.com/thumbnail?id=1qu0vLkf-1VVhBzjLMcCpNO9hpRSGViw0&sz=w800" alt="Analytics 2" loading="lazy" /></a>
+<a href="https://drive.google.com/file/d/1b0bgaJTnaX3nW3J6UyccVQHXE6XDng22/view" target="_blank" rel="noopener" class="gfx-item" data-cat="Analytics"><img src="https://drive.google.com/thumbnail?id=1b0bgaJTnaX3nW3J6UyccVQHXE6XDng22&sz=w800" alt="Analytics 3" loading="lazy" /></a>
+<a href="https://drive.google.com/file/d/12Tbtqspht5FlW5ZNi3cRGZaAv3sKDNyo/view" target="_blank" rel="noopener" class="gfx-item" data-cat="Analytics"><img src="https://drive.google.com/thumbnail?id=12Tbtqspht5FlW5ZNi3cRGZaAv3sKDNyo&sz=w800" alt="Analytics 4" loading="lazy" /></a>
+<a href="https://drive.google.com/file/d/1NzyNN8FXqgGlnE1GIhEzvtrRJu4f52-s/view" target="_blank" rel="noopener" class="gfx-item" data-cat="Carousels"><img src="https://drive.google.com/thumbnail?id=1NzyNN8FXqgGlnE1GIhEzvtrRJu4f52-s&sz=w800" alt="Carousels 1" loading="lazy" /></a>
+<a href="https://drive.google.com/file/d/10g5hGeE6Ae-JdXXAEb5-BrDtokT0sxs2/view" target="_blank" rel="noopener" class="gfx-item" data-cat="Carousels"><img src="https://drive.google.com/thumbnail?id=10g5hGeE6Ae-JdXXAEb5-BrDtokT0sxs2&sz=w800" alt="Carousels 2" loading="lazy" /></a>
+<a href="https://drive.google.com/file/d/1-v3duIksgU_8yYOO9aNZt7W1JTIZmwCZ/view" target="_blank" rel="noopener" class="gfx-item" data-cat="Carousels"><img src="https://drive.google.com/thumbnail?id=1-v3duIksgU_8yYOO9aNZt7W1JTIZmwCZ&sz=w800" alt="Carousels 3" loading="lazy" /></a>
+<a href="https://drive.google.com/file/d/1Y1MhcKjbK99ErHD8JVeI5uKPfSzb7r_Q/view" target="_blank" rel="noopener" class="gfx-item" data-cat="Carousels"><img src="https://drive.google.com/thumbnail?id=1Y1MhcKjbK99ErHD8JVeI5uKPfSzb7r_Q&sz=w800" alt="Carousels 4" loading="lazy" /></a>
+<a href="https://drive.google.com/file/d/1l2ZT8OkRUHAMBtGfxaAM73xIxlbVOfkM/view" target="_blank" rel="noopener" class="gfx-item" data-cat="Carousels"><img src="https://drive.google.com/thumbnail?id=1l2ZT8OkRUHAMBtGfxaAM73xIxlbVOfkM&sz=w800" alt="Carousels 5" loading="lazy" /></a>
+<a href="https://drive.google.com/file/d/1rBSG7LWiEB4It8nsOlDzBuwHzcHNRi4L/view" target="_blank" rel="noopener" class="gfx-item" data-cat="Carousels"><img src="https://drive.google.com/thumbnail?id=1rBSG7LWiEB4It8nsOlDzBuwHzcHNRi4L&sz=w800" alt="Carousels 6" loading="lazy" /></a>
+<a href="https://drive.google.com/file/d/1r9qUZydXb1LLjVy5_tu2s8cAEhKyzlc7/view" target="_blank" rel="noopener" class="gfx-item" data-cat="Carousels"><img src="https://drive.google.com/thumbnail?id=1r9qUZydXb1LLjVy5_tu2s8cAEhKyzlc7&sz=w800" alt="Carousels 7" loading="lazy" /></a>
+<a href="https://drive.google.com/file/d/1roCykeXEK8oCcb0cT95kFVDRS5htLLXr/view" target="_blank" rel="noopener" class="gfx-item" data-cat="Carousels"><img src="https://drive.google.com/thumbnail?id=1roCykeXEK8oCcb0cT95kFVDRS5htLLXr&sz=w800" alt="Carousels 8" loading="lazy" /></a>
+<a href="https://drive.google.com/file/d/1W8KnlylbGj8-IVbKRdJACLVGSgkllrmo/view" target="_blank" rel="noopener" class="gfx-item" data-cat="Carousels"><img src="https://drive.google.com/thumbnail?id=1W8KnlylbGj8-IVbKRdJACLVGSgkllrmo&sz=w800" alt="Carousels 9" loading="lazy" /></a>
+<a href="https://drive.google.com/file/d/1WVYuUuv-iOv3r_gZqfKn5uNDi5i0nn7o/view" target="_blank" rel="noopener" class="gfx-item" data-cat="Carousels"><img src="https://drive.google.com/thumbnail?id=1WVYuUuv-iOv3r_gZqfKn5uNDi5i0nn7o&sz=w800" alt="Carousels 10" loading="lazy" /></a>
+<a href="https://drive.google.com/file/d/1D4FUn9AJypEhsf_pE5Z1lfslcWg9L_v3/view" target="_blank" rel="noopener" class="gfx-item" data-cat="Carousels"><img src="https://drive.google.com/thumbnail?id=1D4FUn9AJypEhsf_pE5Z1lfslcWg9L_v3&sz=w800" alt="Carousels 11" loading="lazy" /></a>
+<a href="https://drive.google.com/file/d/1LNAGUQzFYMvO9n2584g6KZex_5-VB_X3/view" target="_blank" rel="noopener" class="gfx-item" data-cat="Carousels"><img src="https://drive.google.com/thumbnail?id=1LNAGUQzFYMvO9n2584g6KZex_5-VB_X3&sz=w800" alt="Carousels 12" loading="lazy" /></a>
+<a href="https://drive.google.com/file/d/1574b06C9Cw_gaEry5nDY-5j70EDARnYw/view" target="_blank" rel="noopener" class="gfx-item" data-cat="Carousels"><img src="https://drive.google.com/thumbnail?id=1574b06C9Cw_gaEry5nDY-5j70EDARnYw&sz=w800" alt="Carousels 13" loading="lazy" /></a>
+<a href="https://drive.google.com/file/d/1REacMG1tj-V4tMJfEdF75v3MVVowhbJ5/view" target="_blank" rel="noopener" class="gfx-item" data-cat="Carousels"><img src="https://drive.google.com/thumbnail?id=1REacMG1tj-V4tMJfEdF75v3MVVowhbJ5&sz=w800" alt="Carousels 14" loading="lazy" /></a>
+<a href="https://drive.google.com/file/d/1V1eM6CpJ8OzNN_2Y5ccWio3NWNT-U7FI/view" target="_blank" rel="noopener" class="gfx-item" data-cat="Carousels"><img src="https://drive.google.com/thumbnail?id=1V1eM6CpJ8OzNN_2Y5ccWio3NWNT-U7FI&sz=w800" alt="Carousels 15" loading="lazy" /></a>
+<a href="https://drive.google.com/file/d/1DGXvVePdZG2ecJjr8VKl-YGLnDY_vbD5/view" target="_blank" rel="noopener" class="gfx-item" data-cat="Carousels"><img src="https://drive.google.com/thumbnail?id=1DGXvVePdZG2ecJjr8VKl-YGLnDY_vbD5&sz=w800" alt="Carousels 16" loading="lazy" /></a>
+<a href="https://drive.google.com/file/d/1-ObwHlWWgJTYb28Tx7O-3p7UqDlrXr0h/view" target="_blank" rel="noopener" class="gfx-item" data-cat="LinkedIn"><img src="https://drive.google.com/thumbnail?id=1-ObwHlWWgJTYb28Tx7O-3p7UqDlrXr0h&sz=w800" alt="LinkedIn 1" loading="lazy" /></a>
+<a href="https://drive.google.com/file/d/1_DL0Vzxw5DchvG04vvEiYbeHPG9tUdEU/view" target="_blank" rel="noopener" class="gfx-item" data-cat="LinkedIn"><img src="https://drive.google.com/thumbnail?id=1_DL0Vzxw5DchvG04vvEiYbeHPG9tUdEU&sz=w800" alt="LinkedIn 2" loading="lazy" /></a>
+<a href="https://drive.google.com/file/d/1QrD22ZLYvxe-cWO33wASLMeB1fTxqmaC/view" target="_blank" rel="noopener" class="gfx-item" data-cat="LinkedIn"><img src="https://drive.google.com/thumbnail?id=1QrD22ZLYvxe-cWO33wASLMeB1fTxqmaC&sz=w800" alt="LinkedIn 3" loading="lazy" /></a>
+<a href="https://drive.google.com/file/d/1dbJWIlxN1o6jNKhFiJ76IFBizLlAQsGJ/view" target="_blank" rel="noopener" class="gfx-item" data-cat="Twitter Post"><img src="https://drive.google.com/thumbnail?id=1dbJWIlxN1o6jNKhFiJ76IFBizLlAQsGJ&sz=w800" alt="Twitter Post 1" loading="lazy" /></a>
+<a href="https://drive.google.com/file/d/1S3mBetuN9N0ZN5izi8R-tzQbONvM8R0b/view" target="_blank" rel="noopener" class="gfx-item" data-cat="YT Thumbnails"><img src="https://drive.google.com/thumbnail?id=1S3mBetuN9N0ZN5izi8R-tzQbONvM8R0b&sz=w800" alt="YT Thumbnails 1" loading="lazy" /></a>
+<a href="https://drive.google.com/file/d/1oQedTy4RVo2qd-0gAw-shw7WJnWj793_/view" target="_blank" rel="noopener" class="gfx-item" data-cat="YT Thumbnails"><img src="https://drive.google.com/thumbnail?id=1oQedTy4RVo2qd-0gAw-shw7WJnWj793_&sz=w800" alt="YT Thumbnails 2" loading="lazy" /></a>
+<a href="https://drive.google.com/file/d/1IDnuo2_PfX7FS5C-tMemRT_WHLI6szQy/view" target="_blank" rel="noopener" class="gfx-item" data-cat="YT Thumbnails"><img src="https://drive.google.com/thumbnail?id=1IDnuo2_PfX7FS5C-tMemRT_WHLI6szQy&sz=w800" alt="YT Thumbnails 3" loading="lazy" /></a>
+<a href="https://drive.google.com/file/d/1SLDmjqinqVHBQkZr6sxJCxqjLSm6LjvK/view" target="_blank" rel="noopener" class="gfx-item" data-cat="YT Thumbnails"><img src="https://drive.google.com/thumbnail?id=1SLDmjqinqVHBQkZr6sxJCxqjLSm6LjvK&sz=w800" alt="YT Thumbnails 4" loading="lazy" /></a>
+</div>
+</div>
+</section>
+
 <section id="process" class="reveal">
 <div class="process">
 <div class="eyebrow">How we work together</div>
@@ -478,6 +539,25 @@ document.querySelectorAll('.service,.tcard').forEach(card=>{card.addEventListene
   window.addEventListener("mouseup",function(){isDown=false;track.style.cursor="";});
   track.addEventListener("mouseleave",function(){isDown=false;track.style.cursor="";});
   track.addEventListener("mousemove",function(e){if(!isDown)return;e.preventDefault();track.scrollLeft=startLeft-(e.pageX-startX);});
+})();
+
+(function(){
+  var filters = document.querySelectorAll('.gfx-filter');
+  var items = document.querySelectorAll('.gfx-item');
+  filters.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      filters.forEach(function(b){ b.classList.remove('is-active'); });
+      btn.classList.add('is-active');
+      var cat = btn.getAttribute('data-filter');
+      items.forEach(function(item){
+        if(cat === 'All' || item.getAttribute('data-cat') === cat){
+          item.classList.remove('hidden');
+        } else {
+          item.classList.add('hidden');
+        }
+      });
+    });
+  });
 })();
 </script>
 </body>
